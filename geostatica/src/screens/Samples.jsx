@@ -4,53 +4,15 @@ import { Link, useParams } from "react-router-dom";
 
 export function Samples() {
 
-  const pesoEspecifico = {
-    materiais: [{
-      nome: 'Argilas e Siltes Argilosos',
-      numeroDeGolpes: '0-2',
-      peso: 13
-    },
-    {
-      nome: 'Argilas e Siltes Argilosos',
-      numeroDeGolpes: '3-5',
-      peso: 15
-    },
-    {
-      nome: 'Argilas e Siltes Argilosos',
-      numeroDeGolpes: '6-10',
-      peso: 17
-    },
-    {
-      nome: 'Argilas e Siltes Argilosos',
-      numeroDeGolpes: '11-19',
-      peso: 19
-    },
-    {
-      nome: 'Argilas e Siltes Argilosos',
-      numeroDeGolpes: '20-inf',
-      peso: 21
-    },
-    {
-      nome: 'Areias e Silte Arenosos',
-      numeroDeGolpes: '0-4',
-      peso: 18
-    },
-    {
-      nome: 'Areias e Silte Arenosos',
-      numeroDeGolpes: '5-8',
-      peso: 18
-    },
-    {
-      nome: 'Areias e Silte Arenosos',
-      numeroDeGolpes: '19-40',
-      peso: 20
-    },
-    {
-      nome: 'Areias e Silte Arenosos',
-      numeroDeGolpes: '41-inf',
-      peso: 20
-    }]
-  }
+  const materiais = [{nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '0-2', peso: 13},
+                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '3-5', peso: 15},
+                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '6-10', peso: 17},
+                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '11-19', peso: 19},
+                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '20-inf', peso: 21},
+                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '0-4', peso: 18},
+                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '5-8', peso: 18},
+                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '19-40', peso: 20},
+                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '41-inf', peso: 20}]
 
   const params = useParams();
   const [material, setMaterial] = useState(
@@ -132,24 +94,15 @@ export function Samples() {
                       </Form.Group>
                     </td>
                     <td>
-                      <Form.Select
-                        value={material[index]}
-                        size="sm"
-                        onChange={(materialSelected) => {
-                          let newArray = [...material];
-                          newArray[index] = parseInt(
-                            materialSelected.target.value
-                          );
-                          setMaterial([...newArray]);
-                        }}
-                        aria-label="Default select example"
-                      >
+                      <Form.Select>
                         <option style={{ display: "none" }} defaultValue>
                           Escolher
                         </option>
-                        <option value="1">Solo tipo 1</option>
-                        <option value="2">Solo tipo 2</option>
-                        <option value="3">Solo tipo 3</option>
+                        {materiais.map((option, index) => (
+                        <option key={index} value={index}>
+                          {option.nome} | {option.numeroDeGolpes} | {option.peso}
+                        </option>
+                        ))}
                       </Form.Select>
                     </td>
                   </tr>
