@@ -4,23 +4,37 @@ import { Link, useParams } from "react-router-dom";
 
 export function Samples() {
 
-  const materiais = [{nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '0-2', peso: 13},
-                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '3-5', peso: 15},
-                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '6-10', peso: 17},
-                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '11-19', peso: 19},
-                     {nome: 'Argilas e Siltes Argilosos', numeroDeGolpes: '20-inf', peso: 21},
-                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '0-4', peso: 18},
-                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '5-8', peso: 18},
-                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '19-40', peso: 20},
-                     {nome: 'Areias e Silte Arenosos', numeroDeGolpes: '41-inf', peso: 20}]
+  const materiais = [{nome: 'Argilas e Siltes Argilosos'},
+                     {nome: 'Areias e Silte Arenosos'}]
+
+
 
   const params = useParams();
   const [material, setMaterial] = useState(
     Array(parseInt(params.layers)).fill(0)
   );
   const [hits, setHits] = useState(Array(parseInt(params.layers)).fill(1));
+  const [pesoEspecifico, setPesoEspecifico] = useState(Array(parseInt(params.layers)).fill(1));
 
-  useEffect(() => {}, [material, hits]);
+  useEffect(() => {
+
+  }, [material]);
+
+
+  function calcularPesoEspecifico(numeroDeGolpes, posicao) {
+    if(material[posicao] === "Argilas e Siltes Argilosos") {
+
+      // if(params.level > ) {
+
+      // }else {
+
+      // }
+
+    }else if(material[posicao] === "Areias e Silte Arenosos") {
+
+    }
+
+  }
 
   return (
     <section>
@@ -57,8 +71,9 @@ export function Samples() {
             <thead>
               <tr>
                 <th>Amostra</th>
-                <th>Golpes</th>
-                <th>Material</th>
+                <th>Tipo de Solo</th>
+                <th>Número de golpes</th>
+                <th>Peso específico</th>
               </tr>
             </thead>
             <tbody>
@@ -68,7 +83,19 @@ export function Samples() {
               ) {
                 return (
                   <tr key={index}>
-                    <td>{index + 1}</td>
+                    <td>{index + 1 > 1 ? (index+1 + " metros" ) : (index+1 + " metro")}  </td>
+                    <td>
+                      <Form.Select>
+                        <option style={{ display: "none" }} defaultValue>
+                          Escolher
+                        </option>
+                        {materiais.map((option, index) => (
+                        <option key={index} value={option.peso}>
+                          {option.nome}
+                        </option>
+                        ))}
+                      </Form.Select>
+                    </td>
                     <td>
                       <Form.Group controlId="formBasicPassword">
                         <Form.Control
@@ -76,7 +103,8 @@ export function Samples() {
                           onChange={(hitsChanged) => {
                             if (
                               isNaN(parseInt(hitsChanged.target.value)) ||
-                              parseInt(hitsChanged.target.value) === 0
+                              parseInt(hitsChanged.target.value) === 0 ||
+                              hitsChanged.target.value === ''
                             ) {
                               let newArray = [...hits];
                               newArray[index] = parseInt(1);
@@ -88,22 +116,15 @@ export function Samples() {
                               hitsChanged.target.value
                             );
                             setHits([...newArray]);
+                            let newWeightArray = [...pesoEspecifico];
+                            let valorPesoEspecifico = calcularPesoEspecifico(hitsChanged.target.value, index);
                           }}
                           type="number"
                         />
                       </Form.Group>
                     </td>
                     <td>
-                      <Form.Select>
-                        <option style={{ display: "none" }} defaultValue>
-                          Escolher
-                        </option>
-                        {materiais.map((option, index) => (
-                        <option key={index} value={index}>
-                          {option.nome} | {option.numeroDeGolpes} | {option.peso}
-                        </option>
-                        ))}
-                      </Form.Select>
+                         placeholder
                     </td>
                   </tr>
                 );
